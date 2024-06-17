@@ -15,22 +15,20 @@ export default function ArticlesList() {
   }, []);
 
   return (
-    <Box sx={{ m: "40px" }}>
-      <Grid container spacing={2} sx={{ m: "50px auto", maxWidth: "1200px" }}>
-        {articles.map((article) => (
-          <Grid
-            item
-            key={article.article_id}
-            xs={12}
-            sm={6}
-            md={4}
-            lg={3}
-            sx={{ mb: "20px" }}
-          >
-            <Article article={article} />
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+    <Grid container spacing={2} sx={{ m: "50px auto", maxWidth: "1200px" }}>
+      {articles.map((article) => (
+        <Grid
+          item
+          key={article.article_id}
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
+          sx={{ mb: "20px" }}
+        >
+          <Article article={article} />
+        </Grid>
+      ))}
+    </Grid>
   );
 }

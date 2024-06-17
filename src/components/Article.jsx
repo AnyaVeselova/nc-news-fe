@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   CardActions,
+  Box,
 } from "@mui/material";
 
 export default function ItemCard({ article }) {
@@ -27,22 +28,36 @@ export default function ItemCard({ article }) {
         alt={title}
         style={{ height: "200px", objectFit: "cover" }}
       />
-      <Typography gutterBottom component="div" variant="body1">
-        Topic: {topic}
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Typography
+          flexBasis="150px"
+          gutterBottom
+          component="body2"
+          variant="body1"
+        >
+          Topic: {topic}
+        </Typography>
 
-      <Typography variant="body2" color="text.secondary">
-        Author: {author}
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        Date: {created_at.split("T")[0]}
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        Votes: {votes}
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        Comments: {comment_count}
-      </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Author: {author}
+        </Typography>
+        <Typography flexBasis="150px" variant="body2" color="text.secondary">
+          Date: {created_at.split("T")[0]}
+        </Typography>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="body2" color="text.secondary">
+          Votes: {votes}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Comments: {comment_count}
+        </Typography>
+      </Box>
     </Card>
   );
 }
