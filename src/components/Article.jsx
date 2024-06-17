@@ -9,25 +9,33 @@ import {
 } from "@mui/material";
 
 export default function ItemCard({ article }) {
-  const { title, topic, author, created_at, votes, comment_count } = article;
+  const {
+    title,
+    topic,
+    author,
+    created_at,
+    votes,
+    article_img_url,
+    comment_count,
+  } = article;
 
   return (
     <Card sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <CardMedia
         component="img"
-        image="../../public/assets/patrick-tomasso-Oaqk7qqNh_c-unsplash.jpg"
+        image={article_img_url}
         alt={title}
         style={{ height: "200px", objectFit: "cover" }}
       />
-      <Typography gutterBottom component="div" variant="h5">
-        {topic}
+      <Typography gutterBottom component="div" variant="body1">
+        Topic: {topic}
       </Typography>
 
       <Typography variant="body2" color="text.secondary">
-        {author}
+        Author: {author}
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        {created_at}
+        Date: {created_at.split("T")[0]}
       </Typography>
       <Typography variant="body2" color="text.secondary">
         Votes: {votes}
