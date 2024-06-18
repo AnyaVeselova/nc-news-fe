@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Card,
   CardMedia,
@@ -28,8 +28,18 @@ export default function Article({ article }) {
     return null;
   }
 
+  const handleReadMore = () => {
+    //should navigate to an article component in future
+  };
+
   return (
-    <Card sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+      }}
+    >
       <CardMedia
         component="img"
         image={articleWithBody.article_img_url}
@@ -40,31 +50,81 @@ export default function Article({ article }) {
         sx={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "space-between",
+          backgroundColor: "#ADD8E6",
+          padding: "8px 16px",
+          gap: "16px",
         }}
       >
-        <Typography
-          flexBasis="150px"
-          gutterBottom
-          component="body2"
-          variant="body1"
-        >
-          Topic: {articleWithBody.topic}
+        <Typography gutterBottom variant="body2" color="text.secondary">
+          <Typography variant="" component="span" sx={{ fontWeight: "bold" }}>
+            topic:
+          </Typography>{" "}
+          {articleWithBody.topic}
         </Typography>
-
         <Typography variant="body2" color="text.secondary">
-          Author: {articleWithBody.author}
+          <Typography
+            variant="body2"
+            component="span"
+            sx={{ fontWeight: "bold" }}
+          >
+            author:{" "}
+          </Typography>
+          {articleWithBody.author}
         </Typography>
         <Typography flexBasis="150px" variant="body2" color="text.secondary">
-          Date: {formatDate(articleWithBody.created_at)}
+          <Typography
+            variant="body2"
+            component="span"
+            sx={{ fontWeight: "bold" }}
+          >
+            date:
+          </Typography>{" "}
+          {formatDate(articleWithBody.created_at)}
         </Typography>
       </Box>
+      <Box sx={{ padding: "16px" }}>
+        <Typography
+          variant="body1"
+          sx={{
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            WebkitLineClamp: 3,
+          }}
+        >
+          {articleWithBody.body}
+        </Typography>
+        <Button onClick={handleReadMore}>Read more</Button>
+      </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          backgroundColor: "#ADD8E6",
+          padding: "8px 16px",
+        }}
+      >
         <Typography variant="body2" color="text.secondary">
-          Votes: {articleWithBody.votes}
+          <Typography
+            variant="body2"
+            component="span"
+            sx={{ fontWeight: "bold" }}
+          >
+            Votes:
+          </Typography>{" "}
+          {articleWithBody.votes}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Comments: {articleWithBody.comment_count}
+          <Typography
+            variant="body2"
+            component="span"
+            sx={{ fontWeight: "bold" }}
+          >
+            Comments:
+          </Typography>{" "}
+          {articleWithBody.comment_count}
         </Typography>
       </Box>
     </Card>

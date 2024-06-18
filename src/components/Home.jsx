@@ -5,11 +5,12 @@ function Home() {
   return (
     <Box
       sx={{
-        m: "40px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         width: "100vw",
+        minHeight: "100vh",
+        boxSizing: "border-box",
       }}
     >
       <ArticlesList />;

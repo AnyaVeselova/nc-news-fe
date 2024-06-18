@@ -14,7 +14,16 @@ export default function ArticlesList() {
   }, []);
 
   return (
-    <Grid container spacing={2} sx={{ m: "50px auto", maxWidth: "1200px" }}>
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        maxWidth: "1200px",
+        width: "100%",
+        padding: "50px 20px",
+        margin: "50px auto",
+      }}
+    >
       {articles.map((article) => (
         <Grid
           item
