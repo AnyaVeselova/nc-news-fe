@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchArticles } from "../utils/api";
 import { Grid, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function ArticlesList() {
   const [articles, setArticles] = useState([]);
@@ -17,11 +18,13 @@ export default function ArticlesList() {
     <Grid
       container
       spacing={2}
+      alignItems="stretch"
       sx={{
         maxWidth: "1200px",
         width: "100%",
         padding: "50px 20px",
         margin: "50px auto",
+        height: "100%",
       }}
     >
       {articles.map((article) => (
@@ -34,7 +37,12 @@ export default function ArticlesList() {
           lg={3}
           sx={{ mb: "20px" }}
         >
-          <Article article={article} />
+          <Link
+            to={`/articles/${article.article_id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <Article article={article} />
+          </Link>
         </Grid>
       ))}
     </Grid>
