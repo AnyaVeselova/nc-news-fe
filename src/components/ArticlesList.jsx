@@ -1,7 +1,7 @@
 import Article from "../components/Article";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import fetchArticles from "../utils/api";
+import { fetchArticles } from "../utils/api";
 import { Grid, Box } from "@mui/material";
 
 export default function ArticlesList() {
@@ -9,7 +9,6 @@ export default function ArticlesList() {
 
   useEffect(() => {
     fetchArticles().then((response) => {
-      console.log(response);
       setArticles(response);
     });
   }, []);

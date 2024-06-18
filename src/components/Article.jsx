@@ -8,24 +8,32 @@ import {
   CardActions,
   Box,
 } from "@mui/material";
+import { fetchArticleById } from "../utils/api";
+import { useEffect, useState } from "react";
 
-export default function ItemCard({ article }) {
-  const {
-    title,
-    topic,
-    author,
-    created_at,
-    votes,
-    article_img_url,
-    comment_count,
-  } = article;
+export default function Article({ article }) {
+  const [articleWithBody, setArticleWithoBody] = useState(null);
+
+  useEffect(() => {
+    fetchArticleById(article.article_id).then((response) => {
+      setArticleWithoBody(response);
+    });
+  }, [article.article_id]);
+
+  function formatDate(created_at) {
+    return created_at.split("T")[0];
+  }
+
+  if (!articleWithBody) {
+    return null;
+  }
 
   return (
     <Card sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <CardMedia
         component="img"
-        image={article_img_url}
-        alt={title}
+        image={articleWithBody.article_img_url}
+        alt={articleWithBody.title}
         style={{ height: "200px", objectFit: "cover" }}
       />
       <Box
@@ -40,22 +48,23 @@ export default function ItemCard({ article }) {
           component="body2"
           variant="body1"
         >
-          Topic: {topic}
+          Topic: {articleWithBody.topic}
         </Typography>
 
         <Typography variant="body2" color="text.secondary">
-          Author: {author}
+          Author: {articleWithBody.author}
         </Typography>
         <Typography flexBasis="150px" variant="body2" color="text.secondary">
-          Date: {created_at.split("T")[0]}
+          Date: {formatDate(articleWithBody.created_at)}
         </Typography>
       </Box>
+
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="body2" color="text.secondary">
-          Votes: {votes}
+          Votes: {articleWithBody.votes}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Comments: {comment_count}
+          Comments: {articleWithBody.comment_count}
         </Typography>
       </Box>
     </Card>
