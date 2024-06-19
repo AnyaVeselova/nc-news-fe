@@ -1,29 +1,33 @@
 import {
   Card,
   CardMedia,
-  CardContent,
   Typography,
   Button,
-  CardActions,
   Box,
   CircularProgress,
   Skeleton,
   IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { fetchArticleById } from "../utils/api";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CommentsList from "./CommentsList";
 import { ThumbUp, ThumbDown } from "@mui/icons-material";
+import { patchArticle } from "../utils/api";
 
 export default function Article({ article }) {
   const { article_id } = useParams();
   const [articleWithBody, setArticleWithBody] = useState(null);
+  const [votes, setVotes] = useState();
+  const [voteError, setVoteError] = useState(null);
 
   useEffect(() => {
     fetchArticleById(!article_id ? article.article_id : article_id).then(
       (response) => {
         setArticleWithBody(response);
+        setVotes(response.votes);
       }
     );
   }, [article_id]);
@@ -32,6 +36,22 @@ export default function Article({ article }) {
     return created_at.split("T")[0];
   }
 
+  function handleVote(num) {
+    setVotes((prev) => prev + num);
+    const updatedVotes = votes + num;
+    setArticleWithBody((prevArticle) => ({
+      ...prevArticle,
+      votes: updatedVotes,
+    }));
+
+    patchArticle(article_id, num)
+      .then((updatedArticle) => setVotes(updatedArticle.votes))
+      .catch((err) => {
+        setVotes(votes);
+
+        setVoteError(err.message);
+      });
+  }
   //conditional rendering of loading elements on Home page and on Article page
   if (!articleWithBody && article_id) {
     return (
@@ -140,11 +160,11 @@ export default function Article({ article }) {
           <Box
             style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
           >
-            <IconButton aria-label="upvote">
+            <IconButton aria-label="upvote" onClick={() => handleVote(1)}>
               <ThumbUp />
             </IconButton>
             <Typography variant="body2">{articleWithBody.votes}</Typography>
-            <IconButton aria-label="downvote">
+            <IconButton aria-label="downvote" onClick={() => handleVote(-1)}>
               <ThumbDown />
             </IconButton>
           </Box>
@@ -161,6 +181,15 @@ export default function Article({ article }) {
         </Box>
         {article_id && <CommentsList article_id={article_id} />}
       </Box>
+      <Snackbar
+        open={!!voteError}
+        autoHideDuration={6000}
+        onClose={() => setVoteError(null)}
+      >
+        <Alert onClose={() => setVoteError(null)} severity="error">
+          {voteError}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 }
