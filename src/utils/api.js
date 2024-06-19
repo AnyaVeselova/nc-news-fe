@@ -25,3 +25,9 @@ export function fetchArticleById(article_id) {
       console.error(error);
     });
 }
+
+export function fetchCommentsByArticleId(article_id) {
+  return ncNewsApi.get(`/articles/${article_id}/comments`).then((response) => {
+    return response.data;
+  });
+}

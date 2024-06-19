@@ -14,7 +14,7 @@ const StyleLink = styled(Link)({
   color: "black",
   marginRight: "10px",
   "&:hover": {
-    color: "white",
+    color: "darkBlue",
   },
 });
 
@@ -32,14 +32,20 @@ function NavBar() {
         </Box>
         <Box sx={{ flexGrow: 1 }} />
         <Button color="inherit">
-          <StyleLink to="/">Home</StyleLink>
+          <StyleLink sx={{ color: "#fff" }} to="/">
+            Home
+          </StyleLink>
         </Button>
         <Button color="inherit">
-          <StyleLink to="/">Sign in</StyleLink>
+          <StyleLink sx={{ color: "#fff" }} to="/">
+            Sign in
+          </StyleLink>
         </Button>
 
         <Button color="inherit">
-          <StyleLink to="/">Your article</StyleLink>
+          <StyleLink sx={{ color: "#fff" }} to="/">
+            Your article
+          </StyleLink>
         </Button>
       </Toolbar>
     </AppBar>
