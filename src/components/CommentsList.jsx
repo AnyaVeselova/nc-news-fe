@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { fetchCommentsByArticleId } from "../utils/api";
 import { Grid } from "@mui/material";
@@ -8,19 +8,24 @@ import { v4 as uniqueKey } from "uuid";
 
 export default function CommentsList({ article_id }) {
   const [comments, setComments] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchCommentsByArticleId(article_id).then((response) => {
-      setComments(response);
-    });
-  }, []);
+    fetchCommentsByArticleId(article_id)
+      .then((response) => {
+        setComments(response);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [article_id]);
 
-  if (!comments.length) {
+  if (loading) {
     return (
       <CircularProgress
-        sx={{ justifySelf: "center" }}
+        sx={{ justifySelf: "center", alignSelf: "center", m: "20px" }}
         width={210}
         height={118}
+        t
       />
     );
   }
@@ -38,16 +43,22 @@ export default function CommentsList({ article_id }) {
         flexDirection: "column",
       }}
     >
-      {comments.map((comment) => (
-        <Grid item key={comment.comment_id}>
-          <Link
-            to={`/comments/${comment.comment_id}`}
-            style={{ textDecoration: "none" }}
-          >
-            <Comment comment={comment} />
-          </Link>
-        </Grid>
-      ))}
+      {comments.length > 0 ? (
+        comments.map((comment) => (
+          <Grid item key={comment.comment_id}>
+            <Link
+              to={`/comments/${comment.comment_id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Comment comment={comment} />
+            </Link>
+          </Grid>
+        ))
+      ) : (
+        <Typography variant="h5" sx={{ textAlign: "center" }}>
+          No comments yet!
+        </Typography>
+      )}
     </Grid>
   );
 }

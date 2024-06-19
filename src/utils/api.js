@@ -31,3 +31,15 @@ export function fetchCommentsByArticleId(article_id) {
     return response.data;
   });
 }
+
+export function patchArticle(article_id, inc_votes) {
+  return ncNewsApi
+    .patch(`/articles/${article_id}`, { inc_votes })
+    .then((res) => {
+      console.log(res);
+      return res.data.updatedArticle;
+    })
+    .catch((error) => {
+      throw new Error("Failed to update vote");
+    });
+}

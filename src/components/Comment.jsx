@@ -10,8 +10,6 @@ import {
 import { ThumbUp, ThumbDown } from "@mui/icons-material";
 
 export function Comment({ comment }) {
-  console.log(comment);
-
   function formatDate(created_at) {
     return created_at.split("T")[0];
   }
