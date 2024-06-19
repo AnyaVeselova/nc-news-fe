@@ -4,11 +4,14 @@ import { fetchCommentsByArticleId } from "../utils/api";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Comment } from "./Comment";
+import PostComment from "./PostComment";
 import { v4 as uniqueKey } from "uuid";
 
 export default function CommentsList({ article_id }) {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [success, setSuccess] = useState(null);
+
   useEffect(() => {
     fetchCommentsByArticleId(article_id)
       .then((response) => {
@@ -43,6 +46,19 @@ export default function CommentsList({ article_id }) {
         flexDirection: "column",
       }}
     >
+      <PostComment
+        key={uniqueKey()}
+        article_id={article_id}
+        setComments={setComments}
+        setSuccess={setSuccess}
+      />
+      {success && (
+        <Grid item xs={12}>
+          <Typography variant="body2" color="success.main">
+            {success}
+          </Typography>
+        </Grid>
+      )}
       {comments.length > 0 ? (
         comments.map((comment) => (
           <Grid item key={comment.comment_id}>

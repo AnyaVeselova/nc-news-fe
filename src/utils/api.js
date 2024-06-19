@@ -36,10 +36,18 @@ export function patchArticle(article_id, inc_votes) {
   return ncNewsApi
     .patch(`/articles/${article_id}`, { inc_votes })
     .then((res) => {
-      console.log(res);
       return res.data.updatedArticle;
     })
     .catch((error) => {
       throw new Error("Failed to update vote");
+    });
+}
+
+export function postComment(article_id, username, body) {
+  return ncNewsApi
+    .post(`/articles/${article_id}/comments`, { username, body })
+    .then((res) => res.data.comment)
+    .catch((error) => {
+      throw new Error("Failed to post comment");
     });
 }
