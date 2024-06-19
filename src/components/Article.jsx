@@ -7,19 +7,23 @@ import {
   CardActions,
   Box,
   CircularProgress,
+  Skeleton,
+  IconButton,
 } from "@mui/material";
 import { fetchArticleById } from "../utils/api";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import CommentsList from "./CommentsList";
+import { ThumbUp, ThumbDown } from "@mui/icons-material";
 
 export default function Article({ article }) {
   const { article_id } = useParams();
-  const [articleWithBody, setArticleWithoBody] = useState(null);
+  const [articleWithBody, setArticleWithBody] = useState(null);
 
   useEffect(() => {
     fetchArticleById(!article_id ? article.article_id : article_id).then(
       (response) => {
-        setArticleWithoBody(response);
+        setArticleWithBody(response);
       }
     );
   }, [article_id]);
@@ -44,13 +48,7 @@ export default function Article({ article }) {
       </Card>
     );
   } else if (!articleWithBody && !article_id) {
-    return (
-      <CircularProgress
-        sx={{ justifySelf: "center" }}
-        width={210}
-        height={118}
-      />
-    );
+    return <Skeleton width={210} height={118} />;
   }
 
   return (
@@ -136,18 +134,20 @@ export default function Article({ article }) {
             justifyContent: "space-between",
             backgroundColor: "#ADD8E6",
             padding: "8px 16px",
+            alignItems: "center",
           }}
         >
-          <Typography variant="body2" color="text.secondary">
-            <Typography
-              variant="body2"
-              component="span"
-              sx={{ fontWeight: "bold" }}
-            >
-              Votes:
-            </Typography>{" "}
-            {articleWithBody.votes}
-          </Typography>
+          <Box
+            style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
+          >
+            <IconButton aria-label="upvote">
+              <ThumbUp />
+            </IconButton>
+            <Typography variant="body2">{articleWithBody.votes}</Typography>
+            <IconButton aria-label="downvote">
+              <ThumbDown />
+            </IconButton>
+          </Box>
           <Typography variant="body2" color="text.secondary">
             <Typography
               variant="body2"
@@ -159,6 +159,7 @@ export default function Article({ article }) {
             {articleWithBody.comment_count}
           </Typography>
         </Box>
+        {article_id && <CommentsList article_id={article_id} />}
       </Box>
     </Card>
   );
