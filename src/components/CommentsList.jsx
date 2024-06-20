@@ -15,7 +15,7 @@ export default function CommentsList({ article_id, setCommentCount }) {
   useEffect(() => {
     fetchCommentsByArticleId(article_id)
       .then((response) => {
-        setComments(response);
+        setComments(response.reverse());
       })
       .finally(() => {
         setLoading(false);
