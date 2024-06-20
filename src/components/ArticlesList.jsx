@@ -32,7 +32,7 @@ export default function ArticlesList() {
         maxWidth: "1200px",
         width: "100%",
         padding: "50px 20px",
-        margin: "50px auto",
+        margin: "0 auto",
         height: "100%",
       }}
     >
