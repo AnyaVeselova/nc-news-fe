@@ -16,12 +16,18 @@ import { useEffect, useState } from "react";
 import CommentsList from "./CommentsList";
 import { ThumbUp, ThumbDown } from "@mui/icons-material";
 import { patchArticle } from "../utils/api";
+import { useLocation } from "react-router-dom";
 
 export default function Article({ article }) {
+  const location = useLocation();
+  const articleFromLinkState = location.state;
   const { article_id } = useParams();
   const [articleWithBody, setArticleWithBody] = useState(null);
-  const [votes, setVotes] = useState();
+  const [votes, setVotes] = useState(
+    articleFromLinkState ? articleFromLinkState.votes : article.votes
+  );
   const [voteError, setVoteError] = useState(null);
+  const [voteDirection, setVoteDirection] = useState(null);
 
   useEffect(() => {
     fetchArticleById(!article_id ? article.article_id : article_id).then(
@@ -36,21 +42,30 @@ export default function Article({ article }) {
     return created_at.split("T")[0];
   }
 
-  function handleVote(num) {
-    setVotes((prev) => prev + num);
-    const updatedVotes = votes + num;
-    setArticleWithBody((prevArticle) => ({
-      ...prevArticle,
-      votes: updatedVotes,
-    }));
+  function handleVote(type) {
+    const initialVotes = votes;
+    if (type === voteDirection) {
+      setVotes(initialVotes);
+      setVoteDirection(null);
+      return;
+    } else {
+      const num = type === "upvote" ? 1 : -1;
 
-    patchArticle(article_id, num)
-      .then((updatedArticle) => setVotes(updatedArticle.votes))
-      .catch((err) => {
-        setVotes(votes);
-
-        setVoteError(err.message);
-      });
+      const updatedVotes = votes + num;
+      setVotes(updatedVotes);
+      setArticleWithBody((prevArticle) => ({
+        ...prevArticle,
+        votes: updatedVotes,
+      }));
+      setVoteDirection(type);
+      patchArticle(article_id, num)
+        .then((updatedArticle) => setVotes(updatedArticle.votes))
+        .catch((err) => {
+          setVotes(initialVotes);
+          setVoteError(err.message);
+          setHasVoted(null);
+        });
+    }
   }
   //conditional rendering of loading elements on Home page and on Article page
   if (!articleWithBody && article_id) {
@@ -160,13 +175,34 @@ export default function Article({ article }) {
           <Box
             style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
           >
-            <IconButton aria-label="upvote" onClick={() => handleVote(1)}>
-              <ThumbUp />
-            </IconButton>
+            {articleFromLinkState ? (
+              <IconButton
+                aria-label="upvote"
+                onClick={() => handleVote("upvote")}
+              >
+                <ThumbUp />
+              </IconButton>
+            ) : (
+              <Typography
+                variant="body2"
+                component="span"
+                color="text.secondary"
+                sx={{ fontWeight: "bold" }}
+              >
+                Votes:
+              </Typography>
+            )}
             <Typography variant="body2">{articleWithBody.votes}</Typography>
-            <IconButton aria-label="downvote" onClick={() => handleVote(-1)}>
-              <ThumbDown />
-            </IconButton>
+            {articleFromLinkState ? (
+              <IconButton
+                aria-label="downvote"
+                onClick={() => handleVote("downvote")}
+              >
+                <ThumbDown />
+              </IconButton>
+            ) : (
+              ""
+            )}
           </Box>
           <Typography variant="body2" color="text.secondary">
             <Typography

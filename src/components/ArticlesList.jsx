@@ -47,7 +47,10 @@ export default function ArticlesList() {
           sx={{ mb: "20px" }}
         >
           <Link
-            to={`/articles/${article.article_id}`}
+            to={{
+              pathname: `/articles/${article.article_id}`,
+            }}
+            state={article}
             style={{ textDecoration: "none" }}
           >
             <Article article={article} />
