@@ -28,7 +28,6 @@ export default function CommentsList({ article_id }) {
         sx={{ justifySelf: "center", alignSelf: "center", m: "20px" }}
         width={210}
         height={118}
-        t
       />
     );
   }
@@ -59,15 +58,11 @@ export default function CommentsList({ article_id }) {
           </Typography>
         </Grid>
       )}
+
       {comments.length > 0 ? (
         comments.map((comment) => (
           <Grid item key={comment.comment_id}>
-            <Link
-              to={`/comments/${comment.comment_id}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Comment comment={comment} />
-            </Link>
+            <Comment comment={comment} setComments={setComments} />
           </Grid>
         ))
       ) : (

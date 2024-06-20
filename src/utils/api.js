@@ -51,3 +51,7 @@ export function postComment(article_id, username, body) {
       throw new Error("Failed to post comment");
     });
 }
+
+export function deleteCommentByCommentId(comment_id) {
+  return ncNewsApi.delete(`/comments/${comment_id}`);
+}
