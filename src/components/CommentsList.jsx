@@ -7,7 +7,7 @@ import { Comment } from "./Comment";
 import PostComment from "./PostComment";
 import { v4 as uniqueKey } from "uuid";
 
-export default function CommentsList({ article_id }) {
+export default function CommentsList({ article_id, setCommentCount }) {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(null);
@@ -15,7 +15,7 @@ export default function CommentsList({ article_id }) {
   useEffect(() => {
     fetchCommentsByArticleId(article_id)
       .then((response) => {
-        setComments(response);
+        setComments(response.reverse());
       })
       .finally(() => {
         setLoading(false);
@@ -50,6 +50,7 @@ export default function CommentsList({ article_id }) {
         article_id={article_id}
         setComments={setComments}
         setSuccess={setSuccess}
+        setCommentCount={setCommentCount}
       />
       {success && (
         <Grid item xs={12}>
@@ -62,7 +63,11 @@ export default function CommentsList({ article_id }) {
       {comments.length > 0 ? (
         comments.map((comment) => (
           <Grid item key={comment.comment_id}>
-            <Comment comment={comment} setComments={setComments} />
+            <Comment
+              comment={comment}
+              setComments={setComments}
+              setCommentCount={setCommentCount}
+            />
           </Grid>
         ))
       ) : (

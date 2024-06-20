@@ -12,7 +12,7 @@ import { ThumbUp, ThumbDown, Delete } from "@mui/icons-material";
 import { deleteCommentByCommentId } from "../utils/api";
 import { useState } from "react";
 
-export function Comment({ comment, setComments }) {
+export function Comment({ comment, setComments, setCommentCount }) {
   const [deleting, setDeleting] = useState(false);
 
   function formatDate(created_at) {
@@ -28,6 +28,7 @@ export function Comment({ comment, setComments }) {
             return prevComment.comment_id !== comment_id;
           })
         );
+        setCommentCount((prev) => prev - 1);
       })
       .finally(() => {
         setDeleting(false);
