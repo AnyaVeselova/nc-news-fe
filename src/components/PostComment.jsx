@@ -2,7 +2,12 @@ import { TextField, Button, Avatar, Grid } from "@mui/material";
 import { postComment } from "../utils/api";
 import { useState } from "react";
 
-export default function PostComment({ article_id, setComments, setSuccess }) {
+export default function PostComment({
+  article_id,
+  setComments,
+  setSuccess,
+  setCommentCount,
+}) {
   const [newComment, setNewComment] = useState("");
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState(null);
@@ -19,6 +24,7 @@ export default function PostComment({ article_id, setComments, setSuccess }) {
     postComment(article_id, "grumpy19", newComment)
       .then((res) => {
         setComments((prev) => [res, ...prev]);
+        setCommentCount((prev) => prev + 1);
         setNewComment("");
         setSuccess("Comment is added!");
         setTimeout(() => {

@@ -21,6 +21,11 @@ import { useLocation } from "react-router-dom";
 export default function Article({ article }) {
   const location = useLocation();
   const articleFromLinkState = location.state;
+  const [commentCount, setCommentCount] = useState(
+    articleFromLinkState
+      ? articleFromLinkState.comment_count
+      : article.comment_count
+  );
   const { article_id } = useParams();
   const [articleWithBody, setArticleWithBody] = useState(null);
   const [votes, setVotes] = useState(
@@ -212,10 +217,15 @@ export default function Article({ article }) {
             >
               Comments:
             </Typography>{" "}
-            {articleWithBody.comment_count}
+            {commentCount}
           </Typography>
         </Box>
-        {article_id && <CommentsList article_id={article_id} />}
+        {article_id && (
+          <CommentsList
+            article_id={article_id}
+            setCommentCount={setCommentCount}
+          />
+        )}
       </Box>
       <Snackbar
         open={!!voteError}
