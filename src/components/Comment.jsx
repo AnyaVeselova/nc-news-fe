@@ -55,28 +55,33 @@ export function Comment({ comment, setComments }) {
         )}
 
         <Box
-          style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
+          display="flex"
+          alignItems="center"
+          mt="10px"
+          justifyContent="space-between"
         >
-          <IconButton aria-label="upvote">
-            <ThumbUp />
-          </IconButton>
-          <Typography variant="body2" style={{ margin: "0 5px" }}>
-            {comment.votes}
-          </Typography>
-          <IconButton aria-label="downvote">
-            <ThumbDown />
-          </IconButton>
-        </Box>
-        <Box>
-          {comment.author === "grumpy19" && (
-            <IconButton
-              aria-label="delete"
-              onClick={() => handleDelete(comment.comment_id)}
-              disabled={deleting}
-            >
-              {deleting ? <CircularProgress size={24} /> : <Delete />}
+          <Box style={{ display: "flex", alignItems: "center" }}>
+            <IconButton aria-label="upvote">
+              <ThumbUp />
             </IconButton>
-          )}
+            <Typography variant="body2" style={{ margin: "0 5px" }}>
+              {comment.votes}
+            </Typography>
+            <IconButton aria-label="downvote">
+              <ThumbDown />
+            </IconButton>
+          </Box>
+          <Box>
+            {comment.author === "grumpy19" && (
+              <IconButton
+                aria-label="delete"
+                onClick={() => handleDelete(comment.comment_id)}
+                disabled={deleting}
+              >
+                {deleting ? <CircularProgress size={24} /> : <Delete />}
+              </IconButton>
+            )}
+          </Box>
         </Box>
       </CardContent>
     </Card>
