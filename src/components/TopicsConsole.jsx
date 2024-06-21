@@ -21,7 +21,6 @@ export default function TopicsConsole() {
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        mt: "8em",
       }}
     >
       {topics.map((topic, index) => (

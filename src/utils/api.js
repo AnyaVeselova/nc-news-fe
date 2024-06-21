@@ -37,6 +37,7 @@ export function patchArticle(article_id, inc_votes) {
       return res.data.updatedArticle;
     })
     .catch((error) => {
+      console.log(error);
       throw new Error("Failed to update vote");
     });
 }
