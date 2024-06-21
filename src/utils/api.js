@@ -4,12 +4,13 @@ const ncNewsApi = axios.create({
   baseURL: "https://nc-news-x69l.onrender.com/api",
 });
 
-export function fetchArticles(topic) {
+export function fetchArticles(params) {
   return ncNewsApi
-    .get("/articles", { params: { topic } })
+    .get("/articles", { params })
     .then((response) => {
       return response.data.articles;
     })
+
     .catch((error) => {});
 }
 
@@ -37,6 +38,7 @@ export function patchArticle(article_id, inc_votes) {
       return res.data.updatedArticle;
     })
     .catch((error) => {
+      console.log(error);
       throw new Error("Failed to update vote");
     });
 }
