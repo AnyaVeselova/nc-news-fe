@@ -25,7 +25,7 @@ function NavBar() {
         <Box sx={{ display: "flex", alignItems: "center", mr: 3 }}>
           <Box
             component="img"
-            src="../../public/assets/NC-news-logo.png"
+            src="/assets/NC-news-logo.png"
             alt="logo"
             sx={{ mr: 2, width: 100, height: 40, borderRadius: 2 }}
           />

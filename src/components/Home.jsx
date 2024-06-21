@@ -13,7 +13,7 @@ function Home() {
         boxSizing: "border-box",
       }}
     >
-      <ArticlesList />;
+      <ArticlesList />
     </Box>
   );
 }
