@@ -26,7 +26,7 @@ export default function ArticlesList() {
     if (order) {
       parameters.order = order;
     }
-    console.log(parameters);
+
     fetchArticles(parameters).then((response) => {
       setArticles(response);
     });
