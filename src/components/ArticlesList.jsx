@@ -12,6 +12,7 @@ export default function ArticlesList() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const topic = queryParams.get("topic");
+  const 
 
   useEffect(() => {
     fetchArticles(topic).then((response) => {
