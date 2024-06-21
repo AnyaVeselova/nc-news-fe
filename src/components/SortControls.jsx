@@ -9,20 +9,26 @@ import {
 } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { useNavigate } from "react-router-dom";
+
 import { useState } from "react";
 
-export default function SortControls() {
-  const navigate = useNavigate();
+export default function SortControls({ setSearchParams }) {
   const [order, setOrder] = useState("asc");
 
   function handleSortChange(e) {
-    navigate(`/articles?sort_by=${e.target.value}`);
+    setSearchParams((prevSearchParams) => {
+      prevSearchParams.set("sort_by", e.target.value);
+
+      return prevSearchParams;
+    });
   }
 
   function handleOrderChange() {
     setOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-    navigate(`/articles?order=${order}`);
+    setSearchParams((prevSearchParams) => {
+      prevSearchParams.set("order", order);
+      return prevSearchParams;
+    });
   }
 
   return (

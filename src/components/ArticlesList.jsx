@@ -3,34 +3,22 @@ import { CircularProgress, Box } from "@mui/material";
 import { useState, useEffect } from "react";
 import { fetchArticles } from "../utils/api";
 import { Grid } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import TopicsConsole from "./TopicsConsole";
 import SortControls from "./SortControls";
 
 export default function ArticlesList() {
   const [articles, setArticles] = useState([]);
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const topic = queryParams.get("topic");
-  const sort_by = queryParams.get("sort_by");
-  const order = queryParams.get("order");
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const parameters = {};
-    if (topic) {
-      parameters.topic = topic;
-    }
-    if (sort_by) {
-      parameters.sort_by = sort_by;
-    }
-    if (order) {
-      parameters.order = order;
-    }
+    const parameters = Object.fromEntries(searchParams);
 
     fetchArticles(parameters).then((response) => {
       setArticles(response);
     });
-  }, [topic, sort_by, order]);
+  }, [searchParams]);
 
   if (!articles.length) {
     return (
@@ -52,7 +40,7 @@ export default function ArticlesList() {
     >
       <Box sx={{ flex: 1, maxWidth: "1200px", position: "relative" }}>
         <Box sx={{ position: "absolute", top: -12, left: 38 }}>
-          <SortControls />
+          <SortControls setSearchParams={setSearchParams} />
         </Box>
         <Box sx={{ position: "absolute", top: 0, right: 28 }}>
           <TopicsConsole />
@@ -82,6 +70,7 @@ export default function ArticlesList() {
               <Link
                 to={{
                   pathname: `/articles/${article.article_id}`,
+                  search: `?${searchParams.toString()}`,
                 }}
                 state={article}
                 style={{ textDecoration: "none" }}
