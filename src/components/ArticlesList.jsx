@@ -12,13 +12,25 @@ export default function ArticlesList() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const topic = queryParams.get("topic");
-  const 
+  const sort_by = queryParams.get("sort_by");
+  const order = queryParams.get("order");
 
   useEffect(() => {
-    fetchArticles(topic).then((response) => {
+    const parameters = {};
+    if (topic) {
+      parameters.topic = topic;
+    }
+    if (sort_by) {
+      parameters.sort_by = sort_by;
+    }
+    if (order) {
+      parameters.order = order;
+    }
+    console.log(parameters);
+    fetchArticles(parameters).then((response) => {
       setArticles(response);
     });
-  }, [topic]);
+  }, [topic, sort_by, order]);
 
   if (!articles.length) {
     return (
