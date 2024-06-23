@@ -21,7 +21,6 @@ export default function ArticlesList({ error, setError }) {
         setArticles(response);
       })
       .catch((err) => {
-        console.log(err);
         setError(err);
       });
   }, [searchParams, setError]);

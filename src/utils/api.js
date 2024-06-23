@@ -50,7 +50,7 @@ export function postComment(article_id, username, body) {
     .post(`/articles/${article_id}/comments`, { username, body })
     .then((res) => res.data.comment)
     .catch((error) => {
-      throw new Error("Failed to post comment");
+      return Promise.reject(error.response.data);
     });
 }
 
