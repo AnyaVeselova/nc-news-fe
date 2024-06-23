@@ -1,6 +1,8 @@
 import { Box, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 
-export default function NotFound() {
+export default function ErrorPage({ msg, errorCode, errorImg }) {
+  console.log("Error Image:", errorImg);
   return (
     <Box
       sx={{
@@ -13,14 +15,26 @@ export default function NotFound() {
     >
       <Box sx={{ mb: 4 }}>
         <img
-          src={"../../public/assets/page-not-found.webp"}
+          src={errorImg}
           alt="Not Found"
           style={{ width: "300px", height: "auto" }}
         />
       </Box>
       <Typography variant="h5" color="error">
-        Oops! The page you're looking for doesn't exist.
+        {errorCode} - {msg}
       </Typography>
     </Box>
   );
 }
+
+ErrorPage.propTypes = {
+  msg: PropTypes.string.isRequired,
+  errorCode: PropTypes.number.isRequired,
+  errorImg: PropTypes.string,
+};
+
+ErrorPage.defaultProps = {
+  msg: "Ooops! Page not found!",
+  errorCode: 404,
+  errorImg: "/assets/page-not-found.webp",
+};

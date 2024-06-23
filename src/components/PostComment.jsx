@@ -7,21 +7,23 @@ export default function PostComment({
   setComments,
   setSuccess,
   setCommentCount,
+  error,
+  setError,
 }) {
   const [newComment, setNewComment] = useState("");
   const [adding, setAdding] = useState(false);
-  const [error, setError] = useState(null);
+  const [emptyError, setEmptyError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newComment.trim()) {
-      setError("Comment field can not be empty");
+      setEmptyError("Comment field can not be empty");
       return;
     }
     setAdding(true);
-    setError(null);
+    setEmptyError(null);
     setSuccess(null);
-    postComment(article_id, "grumpy19", newComment)
+    postComment(article_id, "grump19", newComment)
       .then((res) => {
         setComments((prev) => [res, ...prev]);
         setCommentCount((prev) => prev + 1);
@@ -33,7 +35,7 @@ export default function PostComment({
       })
 
       .catch((err) => {
-        setError("Comment not added, please try again");
+        setError(err);
       })
       .finally(() => {
         setAdding(false);
@@ -53,8 +55,8 @@ export default function PostComment({
             onChange={(e) => setNewComment(e.target.value)}
             fullWidth
             variant="outlined"
-            error={!!error}
-            helperText={error}
+            error={!!emptyError}
+            helperText={emptyError}
             disabled={adding}
           />
         </form>

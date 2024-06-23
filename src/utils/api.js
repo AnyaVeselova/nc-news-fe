@@ -11,7 +11,9 @@ export function fetchArticles(params) {
       return response.data.articles;
     })
 
-    .catch((error) => {});
+    .catch((err) => {
+      return Promise.reject(err.response.data);
+    });
 }
 
 export function fetchArticleById(article_id) {
@@ -21,7 +23,7 @@ export function fetchArticleById(article_id) {
       return response.data.article;
     })
     .catch((error) => {
-      console.error(error);
+      return Promise.reject(error.response.data);
     });
 }
 
@@ -48,7 +50,7 @@ export function postComment(article_id, username, body) {
     .post(`/articles/${article_id}/comments`, { username, body })
     .then((res) => res.data.comment)
     .catch((error) => {
-      throw new Error("Failed to post comment");
+      return Promise.reject(error.response.data);
     });
 }
 

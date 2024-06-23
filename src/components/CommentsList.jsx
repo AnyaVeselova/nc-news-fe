@@ -5,9 +5,15 @@ import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Comment } from "./Comment";
 import PostComment from "./PostComment";
+import ErrorPage from "../errorHandling/ErrorPage";
 import { v4 as uniqueKey } from "uuid";
 
-export default function CommentsList({ article_id, setCommentCount }) {
+export default function CommentsList({
+  article_id,
+  setCommentCount,
+  error,
+  setError,
+}) {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(null);
@@ -20,7 +26,7 @@ export default function CommentsList({ article_id, setCommentCount }) {
       .finally(() => {
         setLoading(false);
       });
-  }, [article_id]);
+  }, [article_id, error]);
 
   if (loading) {
     return (
@@ -28,6 +34,16 @@ export default function CommentsList({ article_id, setCommentCount }) {
         sx={{ justifySelf: "center", alignSelf: "center", m: "20px" }}
         width={210}
         height={118}
+      />
+    );
+  }
+
+  if (error) {
+    return (
+      <ErrorPage
+        msg={error.msg}
+        errorCode={error.status}
+        errorImg={"/assets/user_not_found.webp"}
       />
     );
   }
@@ -51,6 +67,8 @@ export default function CommentsList({ article_id, setCommentCount }) {
         setComments={setComments}
         setSuccess={setSuccess}
         setCommentCount={setCommentCount}
+        error={error}
+        setError={setError}
       />
       {success && (
         <Grid item xs={12}>
