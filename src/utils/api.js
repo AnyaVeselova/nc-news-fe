@@ -11,7 +11,9 @@ export function fetchArticles(params) {
       return response.data.articles;
     })
 
-    .catch((error) => {});
+    .catch((err) => {
+      return Promise.reject(err.response.data);
+    });
 }
 
 export function fetchArticleById(article_id) {

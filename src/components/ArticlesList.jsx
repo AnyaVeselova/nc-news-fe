@@ -6,6 +6,7 @@ import { Grid } from "@mui/material";
 import { Link, useSearchParams } from "react-router-dom";
 import TopicsConsole from "./TopicsConsole";
 import SortControls from "./SortControls";
+import ErrorPage from "../errorHandling/ErrorPage";
 
 export default function ArticlesList({ error, setError }) {
   const [articles, setArticles] = useState([]);
@@ -15,12 +16,17 @@ export default function ArticlesList({ error, setError }) {
   useEffect(() => {
     const parameters = Object.fromEntries(searchParams);
 
-    fetchArticles(parameters).then((response) => {
-      setArticles(response);
-    });
-  }, [searchParams]);
+    fetchArticles(parameters)
+      .then((response) => {
+        setArticles(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err);
+      });
+  }, [searchParams, setError]);
 
-  if (!articles.length) {
+  if (!articles.length && !error) {
     return (
       <CircularProgress
         sx={{ justifySelf: "center" }}
@@ -29,6 +35,11 @@ export default function ArticlesList({ error, setError }) {
       />
     );
   }
+
+  if (error) {
+    return <ErrorPage errorCode={error.status} msg={error.msg} />;
+  }
+
   return (
     <Box
       sx={{
@@ -43,7 +54,7 @@ export default function ArticlesList({ error, setError }) {
           <SortControls setSearchParams={setSearchParams} />
         </Box>
         <Box sx={{ position: "absolute", top: 0, right: 28 }}>
-          <TopicsConsole />
+          <TopicsConsole error={error} setError={setError} />
         </Box>
         <Grid
           container
