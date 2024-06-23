@@ -21,7 +21,7 @@ export function fetchArticleById(article_id) {
       return response.data.article;
     })
     .catch((error) => {
-      console.error(error);
+      return Promise.reject(error.response.data);
     });
 }
 

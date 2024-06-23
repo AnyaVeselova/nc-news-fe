@@ -8,15 +8,20 @@ import Home from "./components/Home";
 import ArticlesList from "./components/ArticlesList";
 import Article from "./components/Article";
 import ErrorPage from "./errorHandling/ErrorPage";
+import { useState } from "react";
 
 function App() {
+  const [error, setError] = useState(null);
   return (
     <BrowserRouter>
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/articles" element={<ArticlesList />} />
-        <Route path="/articles/:article_id" element={<Article />} />
+        <Route
+          path="/articles/:article_id"
+          element={<Article error={error} setError={setError} />}
+        />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>

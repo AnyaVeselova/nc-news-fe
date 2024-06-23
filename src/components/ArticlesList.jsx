@@ -7,7 +7,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import TopicsConsole from "./TopicsConsole";
 import SortControls from "./SortControls";
 
-export default function ArticlesList() {
+export default function ArticlesList({ error, setError }) {
   const [articles, setArticles] = useState([]);
 
   const [searchParams, setSearchParams] = useSearchParams();

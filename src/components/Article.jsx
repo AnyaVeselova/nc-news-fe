@@ -17,31 +17,42 @@ import CommentsList from "./CommentsList";
 import { ThumbUp, ThumbDown } from "@mui/icons-material";
 import { patchArticle } from "../utils/api";
 import { useLocation } from "react-router-dom";
+import ErrorPage from "../errorHandling/ErrorPage";
 
-export default function Article({ article }) {
+export default function Article({ article, error, setError }) {
   const location = useLocation();
   const articleFromLinkState = location.state;
+
   const [commentCount, setCommentCount] = useState(
     articleFromLinkState
       ? articleFromLinkState.comment_count
-      : article.comment_count
+      : article && article.comment_count
+      ? article.comment_count
+      : null
   );
   const { article_id } = useParams();
   const [articleWithBody, setArticleWithBody] = useState(null);
   const [votes, setVotes] = useState(
-    articleFromLinkState ? articleFromLinkState.votes : article.votes
+    articleFromLinkState
+      ? articleFromLinkState.votes
+      : article && article.votes
+      ? article.votes
+      : null
   );
   const [voteError, setVoteError] = useState(null);
   const [voteDirection, setVoteDirection] = useState(null);
 
   useEffect(() => {
-    fetchArticleById(!article_id ? article.article_id : article_id).then(
-      (response) => {
+    fetchArticleById(!article_id ? article.article_id : article_id)
+      .then((response) => {
         setArticleWithBody(response);
         setVotes(response.votes);
-      }
-    );
-  }, [article_id]);
+        setCommentCount(response.comment_count);
+      })
+      .catch((err) => {
+        setError(err);
+      });
+  }, [article_id, error, commentCount, votes]);
 
   function formatDate(created_at) {
     return created_at.split("T")[0];
@@ -72,6 +83,11 @@ export default function Article({ article }) {
         });
     }
   }
+
+  if (error) {
+    return <ErrorPage errorCode={error.status} msg={error.msg} />;
+  }
+
   //conditional rendering of loading elements on Home page and on Article page
   if (!articleWithBody && article_id) {
     return (
