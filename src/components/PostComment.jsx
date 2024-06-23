@@ -23,7 +23,7 @@ export default function PostComment({
     setAdding(true);
     setEmptyError(null);
     setSuccess(null);
-    postComment(article_id, "grump19", newComment)
+    postComment(article_id, "grumpy19", newComment)
       .then((res) => {
         setComments((prev) => [res, ...prev]);
         setCommentCount((prev) => prev + 1);
