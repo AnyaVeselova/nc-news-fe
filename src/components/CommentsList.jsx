@@ -2,7 +2,6 @@ import { CircularProgress, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { fetchCommentsByArticleId } from "../utils/api";
 import { Grid } from "@mui/material";
-import { Link } from "react-router-dom";
 import { Comment } from "./Comment";
 import PostComment from "./PostComment";
 import ErrorPage from "../errorHandling/ErrorPage";

@@ -84,9 +84,9 @@ export default function Article({ article, error, setError }) {
     }
   }
 
-  // if (error) {
-  //   return <ErrorPage errorCode={error.status} msg={error.msg} />;
-  // }
+  if (error) {
+    return <ErrorPage errorCode={error.status} msg={error.msg} />;
+  }
 
   //conditional rendering of loading elements on Home page and on Article page
   if (!articleWithBody && article_id) {

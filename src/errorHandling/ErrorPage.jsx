@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 
 export default function ErrorPage({ msg, errorCode, errorImg }) {
-  console.log("Error Image:", errorImg);
   return (
     <Box
       sx={{
