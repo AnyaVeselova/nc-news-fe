@@ -7,7 +7,7 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import ArticlesList from "./components/ArticlesList";
 import Article from "./components/Article";
-import NotFound from "./components/NotFound";
+import ErrorPage from "./errorHandling/ErrorPage";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/articles" element={<ArticlesList />} />
         <Route path="/articles/:article_id" element={<Article />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );
