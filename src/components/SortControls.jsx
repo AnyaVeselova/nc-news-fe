@@ -53,6 +53,7 @@ export default function SortControls({ setSearchParams }) {
                   visibility: "hidden",
                 },
               }}
+              the
             >
               Sort By
             </InputLabel>
