@@ -12,6 +12,7 @@ export default function ArticlesList({ error, setError }) {
   const [articles, setArticles] = useState([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams);
 
   useEffect(() => {
     const parameters = Object.fromEntries(searchParams);
@@ -48,23 +49,48 @@ export default function ArticlesList({ error, setError }) {
         mt: "8em",
       }}
     >
-      <Box sx={{ flex: 1, maxWidth: "1200px", position: "relative" }}>
-        <Box sx={{ position: "absolute", top: -12, left: 38 }}>
+      <Grid
+        container
+        spacing={2}
+        alignItems="stretch"
+        sx={{
+          maxWidth: "1200px",
+          width: "100%",
+          padding: "50px 20px",
+          margin: "0 auto",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: "20px",
+            "@media (max-width: 781px)": {
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "space-around",
+              "& > *:first-of-type": {
+                order: 2,
+              },
+              "& > *:last-of-type": {
+                order: 1,
+              },
+            },
+          }}
+        >
           <SortControls setSearchParams={setSearchParams} />
-        </Box>
-        <Box sx={{ position: "absolute", top: 0, right: 28 }}>
           <TopicsConsole error={error} setError={setError} />
         </Box>
-        <Grid
-          container
-          spacing={2}
-          alignItems="stretch"
+        <Box
           sx={{
-            maxWidth: "1200px",
-            width: "100%",
-            padding: "50px 20px",
-            margin: "0 auto",
-            height: "100%",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
           }}
         >
           {articles.map((article) => (
@@ -89,8 +115,9 @@ export default function ArticlesList({ error, setError }) {
               </Link>
             </Grid>
           ))}
-        </Grid>
-      </Box>
+        </Box>
+      </Grid>
     </Box>
+    // </Box>
   );
 }

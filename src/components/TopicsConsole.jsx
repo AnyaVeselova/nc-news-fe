@@ -20,7 +20,6 @@ export default function TopicsConsole() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "100%",
       }}
     >
       {topics.map((topic, index) => (

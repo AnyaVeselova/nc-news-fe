@@ -13,7 +13,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useState } from "react";
 
 export default function SortControls({ setSearchParams }) {
-  const [order, setOrder] = useState("asc");
+  const [order, setOrder] = useState("desc");
 
   function handleSortChange(e) {
     setSearchParams((prevSearchParams) => {
@@ -23,11 +23,14 @@ export default function SortControls({ setSearchParams }) {
     });
   }
 
-  function handleOrderChange() {
-    setOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-    setSearchParams((prevSearchParams) => {
-      prevSearchParams.set("order", order);
-      return prevSearchParams;
+  function handleOrderChange(arrow) {
+    setOrder((prev) => {
+      const newOrder = arrow === "asc" ? "desc" : "asc";
+      setSearchParams((prevSearchParams) => {
+        prevSearchParams.set("order", newOrder);
+        return prevSearchParams;
+      });
+      return newOrder;
     });
   }
 
@@ -43,7 +46,16 @@ export default function SortControls({ setSearchParams }) {
       <Grid container spacing={2} alignItems="center">
         <Grid item>
           <FormControl variant="outlined" sx={{ minWidth: 120 }}>
-            <InputLabel id="sort-criteria-label">Sort By</InputLabel>
+            <InputLabel
+              id="sort-criteria-label"
+              sx={{
+                "&.Mui-focused": {
+                  visibility: "hidden",
+                },
+              }}
+            >
+              Sort By
+            </InputLabel>
             <Select
               labelId="sort-criteria-label"
               defaultValue=""
@@ -56,10 +68,10 @@ export default function SortControls({ setSearchParams }) {
           </FormControl>
         </Grid>
         <Grid item>
-          <IconButton onClick={handleOrderChange}>
+          <IconButton>
             <Box display="flex" flexDirection="column" alignItems="center">
-              <ArrowUpwardIcon />
-              <ArrowDownwardIcon />
+              <ArrowUpwardIcon onClick={() => handleOrderChange("desc")} />
+              <ArrowDownwardIcon onClick={() => handleOrderChange("asc")} />
             </Box>
           </IconButton>
         </Grid>
