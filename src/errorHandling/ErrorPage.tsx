@@ -13,10 +13,11 @@ export default function ErrorPage({ msg, errorCode, errorImg }) {
       }}
     >
       <Box sx={{ mb: 4 }}>
-        <img
+        <Box
+          component="img"
           src={errorImg}
           alt="Not Found"
-          style={{ width: "300px", height: "auto" }}
+          sx={{ width: "300px", height: "auto" }}
         />
       </Box>
       <Typography variant="h5" color="error">
