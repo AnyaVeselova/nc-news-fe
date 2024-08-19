@@ -1,7 +1,15 @@
-import React from "react";
 import { Box, Typography } from "@mui/material";
-import PropTypes from "prop-types";
-export default function ErrorPage({ msg, errorCode, errorImg }) {
+
+interface Props {
+  msg: string;
+  errorCode: number;
+  errorImg?: string;
+}
+export default function ErrorPage({
+  msg = "Ooops! Page not found!",
+  errorCode = 404,
+  errorImg = "/assets/page-not-found.webp",
+}: Props) {
   return (
     <Box
       sx={{
@@ -26,15 +34,3 @@ export default function ErrorPage({ msg, errorCode, errorImg }) {
     </Box>
   );
 }
-
-ErrorPage.propTypes = {
-  msg: PropTypes.string.isRequired,
-  errorCode: PropTypes.number.isRequired,
-  errorImg: PropTypes.string,
-};
-
-ErrorPage.defaultProps = {
-  msg: "Ooops! Page not found!",
-  errorCode: 404,
-  errorImg: "/assets/page-not-found.webp",
-};
