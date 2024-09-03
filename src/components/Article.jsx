@@ -40,7 +40,7 @@ export default function Article({ article, error, setError }) {
       : null
   );
   const [voteError, setVoteError] = useState(null);
-  const [voteDirection, setVoteDirection] = useState(null);
+  const [voteDirection, setVoteDirection] = useState();
 
   useEffect(() => {
     fetchArticleById(!article_id ? article.article_id : article_id)
@@ -59,29 +59,23 @@ export default function Article({ article, error, setError }) {
   }
 
   function handleVote(type) {
-    const initialVotes = votes;
-    if (type === voteDirection) {
-      setVotes(initialVotes);
-      setVoteDirection(null);
-      return;
-    } else {
-      const num = type === "upvote" ? 1 : -1;
+    const num = type === "upvote" ? 1 : -1;
 
-      const updatedVotes = votes + num;
-      setVotes(updatedVotes);
-      setArticleWithBody((prevArticle) => ({
-        ...prevArticle,
-        votes: updatedVotes,
-      }));
-      setVoteDirection(type);
-      patchArticle(article_id, num)
-        .then((updatedArticle) => setVotes(updatedArticle.votes))
-        .catch((err) => {
-          setVotes(initialVotes);
-          setVoteError(err.message);
-          setHasVoted(null);
-        });
+    if (
+      (type === "upvote" && voteDirection === "upvote") ||
+      (type === "downvote" && voteDirection === "downvote")
+    ) {
+      return;
     }
+    setVotes((prev) => {
+      return prev + num;
+    });
+    setVoteDirection(type);
+    patchArticle(article_id, num)
+      .then((updatedArticle) => setVotes(updatedArticle.votes))
+      .catch((err) => {
+        setVoteError(err.message);
+      });
   }
 
   if (error) {
