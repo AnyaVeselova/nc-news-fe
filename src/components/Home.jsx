@@ -1,5 +1,6 @@
 import ArticlesList from "./ArticlesList";
 import { Box } from "@mui/material";
+
 function Home() {
   return (
     <Box
