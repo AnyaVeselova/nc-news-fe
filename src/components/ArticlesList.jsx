@@ -90,7 +90,6 @@ export default function ArticlesList({ error, setError }) {
             display: "flex",
             flexDirection: "row",
             flexWrap: "wrap",
-            justifyContent: "space-between",
           }}
         >
           {articles.map((article) => (
