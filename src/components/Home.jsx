@@ -9,7 +9,6 @@ function Home() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        width: "100vw",
         minHeight: "100vh",
         boxSizing: "border-box",
       }}
