@@ -63,3 +63,27 @@ export function fetchALlTopics() {
     return topics;
   });
 }
+
+export function fetchUsers() {
+  return ncNewsApi
+    .get("/users")
+    .then(({ data: { users } }) => {
+      return users;
+    })
+    .catch((error) => {
+      return Promise.reject(error.response.data);
+    });
+}
+
+export function verifyUser(username, password) {
+  return ncNewsApi
+    .post("/login", { username, password })
+    .then((res) => {
+      const { user, token } = res.data;
+      localStorage.setItem("token", token);
+      console.log("User logged in:", user);
+    })
+    .catch((error) => {
+      return Promise.reject(error.response.data);
+    });
+}

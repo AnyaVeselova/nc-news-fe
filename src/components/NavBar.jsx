@@ -8,6 +8,7 @@ import {
   styled,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const StyleLink = styled(Link)({
   textDecoration: "none",
@@ -19,6 +20,10 @@ const StyleLink = styled(Link)({
 });
 
 function NavBar() {
+  const navigate = useNavigate();
+  const handleSignInClick = () => {
+    navigate("/login");
+  };
   return (
     <AppBar sx={{ p: "0  10px" }}>
       <Toolbar>
@@ -36,7 +41,7 @@ function NavBar() {
             Home
           </StyleLink>
         </Button>
-        <Button color="inherit">
+        <Button color="inherit" onClick={handleSignInClick}>
           <StyleLink sx={{ color: "#fff" }} to="/">
             Sign in
           </StyleLink>

@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import ArticlesList from "./components/ArticlesList";
 import Article from "./components/Article";
 import ErrorPage from "./errorHandling/ErrorPage";
+import UserLogin from "./components/SignIn";
 import { useState } from "react";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           element={<Article error={error} setError={setError} />}
         />
         <Route path="*" element={<ErrorPage />} />
+        <Route path="/login" element={<UserLogin />} />
       </Routes>
     </BrowserRouter>
   );
