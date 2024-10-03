@@ -35,7 +35,8 @@ const UserLogin = () => {
   return (
     <Container maxWidth="sm" sx={{ mt: 25 }}>
       <Alert severity="info" sx={{ mb: 3 }}>
-        This page is currently under development.
+        This page is currently under development. You will be able to login and
+        write your own articles shortly.
       </Alert>
       <Paper elevation={3} sx={{ padding: 4, mt: 5 }}>
         <Typography variant="h4" align="center" gutterBottom>
