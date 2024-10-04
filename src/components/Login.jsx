@@ -11,7 +11,7 @@ import {
   Alert,
 } from "@mui/material";
 
-const UserSignin = () => {
+const UserLogin = () => {
   const [users, setUsers] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -21,10 +21,6 @@ const UserSignin = () => {
       setUsers(users);
     });
   }, []);
-
-  const handleAvatarClick = (user) => {
-    verifyUser(user.username, user.password);
-  };
 
   const handleManualLogin = (e) => {
     e.preventDefault();
@@ -39,7 +35,7 @@ const UserSignin = () => {
       </Alert>
       <Paper elevation={3} sx={{ padding: 4, mt: 5 }}>
         <Typography variant="h4" align="center" gutterBottom>
-          Sign in
+          Login
         </Typography>
 
         <form onSubmit={handleManualLogin}>
@@ -70,36 +66,14 @@ const UserSignin = () => {
                 color="primary"
                 type="submit"
               >
-                Sign in
+                Login
               </Button>
             </Grid>
           </Grid>
         </form>
-
-        <Typography variant="h6" align="center" sx={{ mt: 3 }}>
-          Or login with:
-        </Typography>
-
-        <Grid container spacing={2} justifyContent="center">
-          {users.map((user) => (
-            <Grid item key={user.username}>
-              <div
-                onClick={() => handleAvatarClick(user)}
-                style={{ cursor: "pointer", textAlign: "center" }}
-              >
-                <Avatar
-                  alt={user.name}
-                  src={user.avatar_url}
-                  sx={{ width: 60, height: 60 }}
-                />
-                <Typography variant="body1">{user.name}</Typography>
-              </div>
-            </Grid>
-          ))}
-        </Grid>
       </Paper>
     </Container>
   );
 };
 
-export default UserSignin;
+export default UserLogin;

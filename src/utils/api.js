@@ -77,11 +77,14 @@ export function fetchUsers() {
 
 export function verifyUser(username, password) {
   return ncNewsApi
-    .post("/login", { username, password })
+    .post("/users/login", { username, password })
     .then((res) => {
+      console.log(res.data);
       const { user, token } = res.data;
+      console.log(user, token);
       localStorage.setItem("token", token);
       console.log("User logged in:", user);
+      return { user, token };
     })
     .catch((error) => {
       return Promise.reject(error.response.data);

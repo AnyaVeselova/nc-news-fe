@@ -8,8 +8,9 @@ import Home from "./components/Home";
 import ArticlesList from "./components/ArticlesList";
 import Article from "./components/Article";
 import ErrorPage from "./errorHandling/ErrorPage";
-import UserLogin from "./components/SignIn";
+import UserLogin from "./components/Login";
 import { useState } from "react";
+import UserSignin from "./components/SignIn";
 
 function App() {
   const [error, setError] = useState(null);
@@ -28,6 +29,7 @@ function App() {
         />
         <Route path="*" element={<ErrorPage />} />
         <Route path="/login" element={<UserLogin />} />
+        <Route path="/signin" element={<UserSignin />} />
       </Routes>
     </BrowserRouter>
   );

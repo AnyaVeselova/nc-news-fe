@@ -22,6 +22,10 @@ const StyleLink = styled(Link)({
 function NavBar() {
   const navigate = useNavigate();
   const handleSignInClick = () => {
+    navigate("/signin");
+  };
+
+  const handleLogInClick = () => {
     navigate("/login");
   };
   return (
@@ -42,8 +46,13 @@ function NavBar() {
           </StyleLink>
         </Button>
         <Button color="inherit" onClick={handleSignInClick}>
-          <StyleLink sx={{ color: "#fff" }} to="/">
+          <StyleLink sx={{ color: "#fff" }} to="/signin">
             Sign in
+          </StyleLink>
+        </Button>
+        <Button color="inherit" onClick={handleLogInClick}>
+          <StyleLink sx={{ color: "#fff" }} to="/login">
+            Log in
           </StyleLink>
         </Button>
 
